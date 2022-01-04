@@ -1,19 +1,19 @@
 import React from 'react';
 import ToDo from './ToDo'
 
-const ToDoList = ({listItems}) => {
+const ToDoList = ({listItems, handleToggle, handleCompleted}) => {
     return (
         <ul
-        className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading"
         >
             {
               listItems.map(item => {
                   return (
-                      <ToDo todo={item} />
+                      <ToDo todo={item} handleToggle={handleToggle} />
                   )
               })
             }
+            <button style={{margin: '20px'}} onClick={handleCompleted}>Clear Completed</button>
         </ul>
     )
 }

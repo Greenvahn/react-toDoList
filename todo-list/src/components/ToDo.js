@@ -1,8 +1,19 @@
 import React from 'react';
 
-const ToDo = ({todo}) => {
+const ToDo = ({todo, handleToggle}) => {
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        handleToggle(e.currentTarget.id)
+    }
+
     return (
-        <li className='{todo.complete ? "strike": ""}'>
+        <li 
+        id={todo.id}
+        key={todo.id + todo.task}
+        className={todo.complete ? "todo strike": ""} 
+        onClick={handleClick}
+        >
             {todo.task}
         </li>
     )
