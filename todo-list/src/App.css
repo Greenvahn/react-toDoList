@@ -55,3 +55,9 @@ li.todo {
 button:focus, input:focus {
   outline: none;
 }
+
+.form-class.invalid input {
+  border-color: red;
+  background-color: salmon;
+  color: red;
+}
