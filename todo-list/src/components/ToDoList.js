@@ -9,7 +9,7 @@ const ToDoList = ({listItems, handleToggle, handleCompleted}) => {
             {
               listItems.map((item) => {
                   return (
-                      <ToDo key={item.id} todo={item} handleToggle={handleToggle} />
+                      <ToDo key={'t'+item.id} todo={item} handleToggle={handleToggle} />
                   )
               })
             }
