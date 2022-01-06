@@ -10,7 +10,6 @@ const ToDo = ({todo, handleToggle}) => {
     return (
         <li 
         id={todo.id}
-        key={todo.id + todo.task}
         className={todo.complete ? "todo strike": ""} 
         onClick={handleClick}
         >

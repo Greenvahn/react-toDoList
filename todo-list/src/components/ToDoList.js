@@ -7,9 +7,9 @@ const ToDoList = ({listItems, handleToggle, handleCompleted}) => {
         aria-labelledby="list-heading"
         >
             {
-              listItems.map(item => {
+              listItems.map((item) => {
                   return (
-                      <ToDo todo={item} handleToggle={handleToggle} />
+                      <ToDo key={item.id} todo={item} handleToggle={handleToggle} />
                   )
               })
             }
