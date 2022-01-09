@@ -8,7 +8,7 @@ import Header from '../components/Header'
 
 
 // Create testing suite by using describe('') function
-describe('Header component', () => {
+describe('<Header />', () => {
     test('renders Header - To Do List', () => {
 
         // Arrange

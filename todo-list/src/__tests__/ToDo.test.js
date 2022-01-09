@@ -10,7 +10,7 @@ import ToDo from '../components/ToDo'
 
 
 // Create testing suite by using describe('') function
-describe('ToDo component', () => {
+describe('<ToDo />', () => {
   it('renders correctly', () => {
     // Setup
     const todo = { id: 1, complete: false, task:'Any' };
@@ -47,7 +47,7 @@ describe('ToDo component', () => {
     const item = screen.getByRole('listitem');
 
     // Expectations / action
-    expect(fireEvent.click(item)).toBe(false)
+    expect(fireEvent.click(item)).toBe(false) // e.preventDefault();
     expect(handleToggle).toBeCalledWith(String(todo.id))
     expect(todo.complete).toBe(todo.complete)
   })

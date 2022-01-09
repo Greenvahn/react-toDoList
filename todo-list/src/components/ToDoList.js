@@ -1,5 +1,6 @@
 import React from 'react';
 import ToDo from './ToDo'
+import Button from './ButtonClear';
 
 const ToDoList = ({listItems, handleToggle, handleCompleted}) => {
     return (
@@ -13,7 +14,7 @@ const ToDoList = ({listItems, handleToggle, handleCompleted}) => {
                   )
               })
             }
-            <button style={{margin: '20px'}} onClick={handleCompleted}>Clear Completed</button>
+            <Button handleCompleted={handleCompleted} />
         </ul>
     )
 }

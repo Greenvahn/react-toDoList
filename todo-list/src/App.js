@@ -22,7 +22,6 @@ function App() {
     let filtered = toDoList.filter(task => {
       return !task.complete
     })
-    console.log("filtered", filtered)
     setToDoList(filtered)
   }
 
