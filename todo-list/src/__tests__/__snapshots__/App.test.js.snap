@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App.js /> the task data is correct 1`] = `
+Array [
+  Object {
+    "complete": true,
+    "id": 1,
+    "task": "Give dog a bath",
+  },
+  Object {
+    "complete": true,
+    "id": 2,
+    "task": "Do laundry",
+  },
+  Object {
+    "complete": false,
+    "id": 3,
+    "task": "Vacuum floor",
+  },
+  Object {
+    "complete": true,
+    "id": 4,
+    "task": "Feed cat",
+  },
+  Object {
+    "complete": false,
+    "id": 5,
+    "task": "Change light bulbs",
+  },
+]
+`;
