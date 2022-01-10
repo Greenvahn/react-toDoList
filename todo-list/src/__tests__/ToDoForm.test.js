@@ -81,6 +81,51 @@ describe('<ToDoForm />', () => {
     expect(setUserInput).toBeCalledWith('')
   })
 
+  it('Fires submit button and add a task to "toDoList" array', () => {
+    let inputValueSample = 'My Task'
+    let taskList = [{id: 1, task: "first task", complete: false}, {id: 2, task: "second task", complete: false}]
+    const setToDoList = jest.fn();
+
+    const addTask = jest.fn((userInput) => {
+      taskList = [...taskList, {id: taskList.length + 1, task: userInput, complete: false}];
+  
+      // Sort new IDs - prevents items from having the same ID.
+      taskList = taskList.map((task, index) => {
+        return {...task, id: index + 1}
+      })
+      setToDoList(taskList)
+    })
+
+    const handleSubmit = jest.fn(() => {
+      addTask(inputValueSample)
+    })
+
+    // Setup
+    render(<ToDoForm />)
+    
+    // Asserts
+    const submitBtn = screen.getByRole('button')
+
+    // Actions
+    const click = fireEvent.click(submitBtn)
+    
+    
+    // Expects
+    expect(inputValueSample).not.toHaveLength(0)
+    expect(taskList).not.toHaveLength(0)
+    expect(click).toBe(true)
+    handleSubmit()
+    expect(addTask).toBeCalledWith(inputValueSample)
+    expect(taskList).toHaveLength(3)
+    expect(taskList.map(task => task.id)).toEqual([
+      1,
+      2,
+      3
+    ]);
+    expect(taskList[2].task).toEqual(inputValueSample)
+    expect(taskList[2].complete).toEqual(false)
+  })
+
   it('Clears the input value on submit', () => {
     let inputValueSample = 'My Task'
     const setUserInput = jest.fn((value) => {

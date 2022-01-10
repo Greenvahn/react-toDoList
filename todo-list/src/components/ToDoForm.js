@@ -23,7 +23,7 @@ const ToDoForm = ({addTask}) => {
     return (
         <form onSubmit={handleSubmit} className={`form-class ${!isValid ? 'invalid':''}`} data-testid="form">
             <input value={userInput} type="text" onChange={handleChange} placeholder="Enter task..." data-testid="input" />
-            <button>Submit</button>
+            <button data-testid="submit-btn">Submit</button>
         </form>
     )
 }

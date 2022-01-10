@@ -1,7 +1,6 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ToDoList from "../components/ToDoList"
-import ToDo from "../components/ToDo"
 
 describe('<ToDoList />', () => {
   it('Renders a list of taks and a button', () => {
