@@ -66,4 +66,86 @@ describe('<App.js />', () => {
     expect(mapped[1].task).toEqual('Do laundry')
     expect(mapped[1].complete).toEqual(false)
   })
+
+  it('Checks the handleCompleted function', () =>{
+    let toDoList = data;
+    let filtered = [];
+    const setToDoList = jest.fn(() => {
+      toDoList = filtered;
+    });
+    const handleCompleted = jest.fn(() => {
+      filtered = toDoList.filter(task => {
+        return !task.complete
+      })
+      setToDoList(filtered)
+    })
+    
+    render(<App />)
+
+    // Asserts
+    const clearButton = screen.getByText('Clear Completed')
+
+    fireEvent.click(clearButton)
+    expect(toDoList).toHaveLength(data.length);
+    expect(filtered).toEqual([])
+    handleCompleted()
+    expect(filtered.map(task => task.complete)).toEqual([
+      false,
+      false
+    ])
+    expect(setToDoList).toHaveBeenCalledWith(filtered)
+    expect(toDoList).toHaveLength(filtered.length)
+  })
+
+  it('Checks the addTask function', () => {
+    // Setup
+    let toDoList = data;
+    let userInput = 'My Task';
+    let newTasklist = [];
+    const setUserInput = jest.fn();
+    const setToDoList = jest.fn();
+    const addTask = jest.fn((userInput) =>{
+      newTasklist = [...toDoList]
+      newTasklist = [...newTasklist, {id: toDoList.length + 1, task: userInput, complete: false}];
+  
+      // Sort new IDs - prevents items from having the same ID.
+      newTasklist = newTasklist.map((task, index) => {
+        return {...task, id: index + 1}
+      })
+      setToDoList(newTasklist)
+    })
+
+    const handleSubmit = jest.fn(() => {
+      addTask(userInput)
+      setUserInput('')
+    })
+
+    render(<App />)
+
+    // Asserts
+    const form = screen.getByTestId("form")
+
+    // Actions
+    fireEvent.submit(form)
+    expect(newTasklist).toEqual([])
+    expect(toDoList).toHaveLength(data.length);
+    handleSubmit()
+    expect(newTasklist = [
+      ...toDoList,
+      {
+        id: toDoList.length + 1,
+        task: 'My Task',
+        complete: false
+      }
+    ]).toHaveLength(toDoList.length + 1)
+    expect(newTasklist.map(task => task.id)).toEqual([
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ])
+    expect(setToDoList).toHaveBeenCalledWith(newTasklist)
+  })
 })
