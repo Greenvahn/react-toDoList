@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ToDoForm from "../components/ToDoForm";
+import data from "../rawData/data.json"
 
 describe('<ToDoForm />', () => {
   afterEach(() => {
@@ -83,7 +84,7 @@ describe('<ToDoForm />', () => {
 
   it('Fires submit button and add a task to "toDoList" array', () => {
     let inputValueSample = 'My Task'
-    let taskList = [{id: 1, task: "first task", complete: false}, {id: 2, task: "second task", complete: false}]
+    let taskList = data;
     const setToDoList = jest.fn();
 
     const addTask = jest.fn((userInput) => {
@@ -101,7 +102,7 @@ describe('<ToDoForm />', () => {
     })
 
     // Setup
-    render(<ToDoForm />)
+    render(<ToDoForm addTask={addTask} />)
     
     // Asserts
     const submitBtn = screen.getByRole('button')
@@ -116,14 +117,17 @@ describe('<ToDoForm />', () => {
     expect(click).toBe(true)
     handleSubmit()
     expect(addTask).toBeCalledWith(inputValueSample)
-    expect(taskList).toHaveLength(3)
+    expect(taskList).toHaveLength(6)
     expect(taskList.map(task => task.id)).toEqual([
       1,
       2,
-      3
+      3,
+      4,
+      5,
+      6
     ]);
-    expect(taskList[2].task).toEqual(inputValueSample)
-    expect(taskList[2].complete).toEqual(false)
+    expect(taskList[5].task).toEqual(inputValueSample)
+    expect(taskList[5].complete).toEqual(false)
   })
 
   it('Clears the input value on submit', () => {
@@ -185,5 +189,48 @@ describe('<ToDoForm />', () => {
     expect(setIsValid).toBeCalledWith(false)
     expect(isValid).toBe(false)
     expect(handleSubmit).toHaveReturned()
+  })
+
+  it('Checks on addTask function', () => {
+    let inputValueSample = 'My Task'
+    let toDoList = data;
+    let newTaskList = [];
+    const setState = jest.fn(() =>  {
+      toDoList = newTaskList
+    });
+
+    const addTask = jest.fn((userInput) => {
+      newTaskList = [...toDoList, {id: toDoList.length + 1, task: userInput, complete: false}];
+  
+      // Sort new IDs - prevents items from having the same ID.
+      newTaskList = newTaskList.map((task, index) => {
+        return {...task, id: index + 1}
+      })
+      setState(newTaskList)
+    })
+
+    // Setup
+    render(<ToDoForm addTask={addTask} />)
+
+
+    // Actions
+    addTask(inputValueSample)
+    expect(newTaskList.map(task => task.id)).toEqual([
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ])
+    expect(newTaskList[5].task).toEqual(inputValueSample)
+    expect(setState).toHaveBeenCalledTimes(1)
+    expect(toDoList).toEqual(newTaskList)
+  })
+
+  it('Simulates a simple call of addTask', () => {
+    const addTask = jest.fn((value => value))
+    addTask("My Task")
+    expect(addTask).toHaveBeenCalledWith("My Task");
   })
 })

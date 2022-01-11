@@ -26,8 +26,7 @@ function App() {
   }
 
   const addTask = (userInput) => {
-    let newTasklist = [...toDoList]
-    newTasklist = [...newTasklist, {id: toDoList.length + 1, task: userInput, complete: false}];
+    let newTasklist = [...toDoList, {id: toDoList.length + 1, task: userInput, complete: false}];
 
     // Sort new IDs - prevents items from having the same ID.
     newTasklist = newTasklist.map((task, index) => {
